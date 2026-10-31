@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+*.vsix
+out/
+dist/
+
+# VS Code test runner downloads
+.vscode-test/
+
+# Logs / OS / editor junk
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+*.swp

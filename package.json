@@ -1,0 +1,121 @@
+{
+  "name": "kiro-spec-progress",
+  "displayName": "Kiro Spec Progress",
+  "description": "Progress bars for your Kiro specs: shows % complete per spec by counting the task checkboxes in .kiro/specs/*/tasks.md.",
+  "version": "0.1.0",
+  "private": true,
+  "publisher": "digitaldefiance",
+  "author": "Jessica",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Digital-Defiance/kiro-spec-pct.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Digital-Defiance/kiro-spec-pct/issues"
+  },
+  "homepage": "https://github.com/Digital-Defiance/kiro-spec-pct#readme",
+  "pricing": "Free",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#4c1d95",
+    "theme": "dark"
+  },
+  "keywords": [
+    "kiro",
+    "spec",
+    "specs",
+    "tasks",
+    "tasks.md",
+    "progress",
+    "checklist",
+    "spec-driven development"
+  ],
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "workspaceContains:.kiro/specs"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "kiroSpecProgress",
+          "title": "Spec Progress",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "kiroSpecProgress": [
+        {
+          "type": "webview",
+          "id": "kiroSpecProgress.view",
+          "name": "Specs"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "kiroSpecProgress.refresh",
+        "title": "Kiro Spec Progress: Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "kiroSpecProgress.show",
+        "title": "Kiro Spec Progress: Show"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "kiroSpecProgress.refresh",
+          "when": "view == kiroSpecProgress.view",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Kiro Spec Progress",
+      "properties": {
+        "kiroSpecProgress.includeOptional": {
+          "type": "boolean",
+          "default": true,
+          "description": "Count optional tasks (marked with * after the checkbox, e.g. `- [ ]* write tests`) in the percentage."
+        },
+        "kiroSpecProgress.topLevelOnly": {
+          "type": "boolean",
+          "default": false,
+          "description": "Only count top-level tasks (ignore indented sub-tasks)."
+        },
+        "kiroSpecProgress.statusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show overall progress across all specs in the status bar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node test/parse.test.js",
+    "build": "npm test && mkdir -p dist && npx --yes @vscode/vsce package --out dist/",
+    "publish": "npm run build && npx --yes @vscode/vsce publish --packagePath dist/$npm_package_name-$npm_package_version.vsix",
+    "release:patch": "npm version patch && npm run publish",
+    "release:minor": "npm version minor && npm run publish"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^4.1.0"
+  }
+}

@@ -1,0 +1,10 @@
+# Files left out of the packaged .vsix
+.vscode/**
+.vscode-test/**
+test/**
+node_modules/**
+.gitignore
+.editorconfig
+.gitattributes
+*.vsix
+**/*.map
